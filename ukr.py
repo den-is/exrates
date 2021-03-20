@@ -2,7 +2,7 @@
 
 import requests
 import re
-import os.path
+import os
 
 from datetime import datetime, date
 from pprint import pprint
