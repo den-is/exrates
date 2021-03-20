@@ -11,10 +11,16 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
-# TODO: Update with proper URL to your Google spreadsheet/sheet
+# TODO: Update with proper URL to your Google spreadsheet/sheet or provide URL using ENV variable
 
-SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/abcdefghijklmn/edit#gid=00000000"
+SPREADSHEET_URL = ''
 
+if os.getenv('SPREADSHEET_URL'):
+    _THIS_URL = os.getenv('SPREADSHEET_URL')
+elif SPREADSHEET_URL != '':
+    _THIS_URL = SPREADSHEET_URL
+else:
+    print("Link to spreadsheet doesn't exist. Provide one.")
 
 def uah_rates():
     url = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
@@ -157,7 +163,7 @@ if __name__ == "__main__":
     uah = uah_rates()
     usd = usd_rates()
 
-    spreadsheet_id  = get_spreadsheet_id(SPREADSHEET_URL)['spreadsheet_id']
+    spreadsheet_id  = get_spreadsheet_id(_THIS_URL)['spreadsheet_id']
 
     # If modifying these scopes, delete the file token.json.
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
